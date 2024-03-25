@@ -1,5 +1,5 @@
 <?php
-require("dbConn.php");
+require_once("dbConn.php");
 class Functions{
 
     public function getAdmins(){
