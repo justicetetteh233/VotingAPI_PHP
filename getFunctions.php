@@ -61,6 +61,26 @@ class Functions{
         return $json_data;
 
     }
+    public function getPositionById($id){
+        $conn = new DbConn();
+        $conn = $conn->provideCon();
+        $sql = "SELECT * FROM  Position WHERE id = '$id' ";
+        $result = $conn->query($sql);
+
+        $details  = [];
+        if ($result->rowCount() > 0) {
+            while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                $detail = new stdClass();
+                $detail->id = $row["id"];
+                $detail->Name = $row["name"];
+                $detail->Admin_id = $row["admin_id"];
+                $details[] = $detail;
+            }
+        }
+        $json_data = json_encode($details);
+        return $json_data;
+
+    }
 
     public function getCandidates(){
         $conn = new DbConn();
@@ -82,6 +102,26 @@ class Functions{
         $json_data = json_encode($details);
         return $json_data;
     }
+    public function getCandidatesById($id){
+        $conn = new DbConn();
+        $conn = $conn->provideCon();
+        $sql = "SELECT * FROM  Candidates WHERE id = '$id' ";
+        $result = $conn->query($sql);
+        $details = [];
+        if ($result->rowCount() > 0) {
+            while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                $detail = new stdClass();
+                $detail->id = $row["id"];
+                $detail->Name = $row["name"];
+                $detail->Admin_id = $row["admin"];
+                $detail->position = $row["position"];
+                $details[] = $detail;
+            }
+        }
+        $json_data = json_encode($details);
+        return $json_data;
+    }
+
 
     public function getVerificationCodes(){
         $conn = new DbConn();
@@ -102,6 +142,7 @@ class Functions{
         return $json_data;
     }
 
+    
     public function voteCasts(){
         $conn = new DbConn();
         $conn = $conn->provideCon();

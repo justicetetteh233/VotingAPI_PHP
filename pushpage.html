@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Admin Form</title>
+</head>
+<body>
+    <h2>Create Admin</h2>
+    <form id="adminForm">
+        <label for="id">ID:</label><br>
+        <input type="text" id="id" name="id"><br>
+
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description"></textarea><br>
+
+        <input type="button" value="Submit" onclick="submitForm()">
+    </form>
+
+    <script>
+        function submitForm() {
+            // Serialize form data into JSON format
+            var formData = {
+                'id': document.getElementById('id').value,
+                'name': document.getElementById('name').value,
+                'description': document.getElementById('description').value
+            };
+
+            // Make POST request with serialized form data
+            fetch('http://localhost:55555/customer_php_api/createadmin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Admin created successfully!');
+                } else {
+                    throw new Error('Failed to create admin');
+                }
+            })
+            .catch(error => {
+                alert('Error: ' + error.message);
+            });
+        }
+    </script>
+</body>
+</html>
